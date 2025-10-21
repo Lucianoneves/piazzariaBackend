@@ -1,22 +1,15 @@
- import { Request, Response } from "express";
- import {CreateCategoryService} from '../../services/category/CreateCategoryService.js'
+import prisma from "../../prisma/index.js";
 
+class CreateCategoryController {
+  async handle(req, res) {
+    const { name } = req.body;
+    if (!name) return res.status(400).json({ error: "Nome obrigatório" });
 
- class CreateCategoryController{
-    async handle(req: Request, res: Response){
-        const {name} = req.body;
- 
-    const createCategoryService = new CreateCategoryService();
+    const category = await prisma.category.create({
+      data: { name },
+    });
+    return res.json(category);
+  }
+}
 
-
-    const category = await createCategoryService.execute({ 
-       name
-    }); 
-
-  
-  return res.json(category);
-
- }
- }
-
- export {CreateCategoryController}
+export { CreateCategoryController };

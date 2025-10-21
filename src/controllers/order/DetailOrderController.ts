@@ -3,19 +3,13 @@ import { DetailOrderService } from "../../services/order/DetailOrderService.js";
 
 class DetailOrderController {
   async handle(req: Request, res: Response) {
-    const { order_id } = req.params; // Pegando o order_id da query da requisição
+    const order_id = req.query.order_id as string; // ✅ correto
+    const detailOrderService = new DetailOrderService();
 
-    const detailOrderService = new DetailOrderService(); // Instanciando a classe DetailOrderService
+    const orders = await detailOrderService.execute({ order_id });
 
-
-    const orders = await detailOrderService.execute({ // Chamando o método execute da classe DetailOrderService
-        order_id 
-    },
-)
     return res.json(orders);
   }
 }
 
-export { DetailOrderController } 
-
-
+export { DetailOrderController };

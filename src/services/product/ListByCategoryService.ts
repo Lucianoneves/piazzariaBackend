@@ -9,7 +9,7 @@ class ListByCategoryService {
     async execute({category_id}: ProductRequest) { // async pq é uma promessa
         const  findByCategory = await PrismaClient.product.findMany({ // findMany pq pode ter mais de um produto na mesma categoria
             where: { 
-                categoryId: category_id  // filtrando pelo id da categoria
+                category_id: category_id  // filtrando pelo id da categoria
                 
             }
         });

@@ -23,11 +23,12 @@ import { DetailOrderController } from './controllers/order/DetailOrderController
 import { FinishOrderController } from './controllers/order/FinishOrderController.js'; // Importando o controlador FinishOrderController
 
 
+
 import { isAuthenticted } from './middlewares/isAuthenticted.js';
 import uploadConfig from './config/multer.js';
 
 const router = Router();
-const upload = multer(uploadConfig.upload('./tmp'));
+
 
 //-- ROTAS USER --
 router.post('/users', new CreateUserController().handle); // criar usuario
@@ -38,21 +39,24 @@ router.post('/session', new AuthUserController().handle); // Rota de autenticaç
 router.get('/me', isAuthenticted, new DetailUserController().handle);  // Rota que traz os detalhes do usuário logado
 
 //-- Rotas Category --
-router.post('/category', isAuthenticted, new CreateCategoryController().handle);
-router.get('/category', isAuthenticted, new ListCategoryController().handle);
+router.post("/category", new CreateCategoryController().handle); // Criar categoria
+router.get('/category', isAuthenticted, new ListCategoryController().handle); // Listar categorias
+
 
 //-- Rotas Produto --
-router.post('/product', isAuthenticted, upload.single('file'), new CreateProductController().handle);
-router.get('/category/product', isAuthenticted, new ListByCategoryController().handle);
+//router.post("/product", uploadConfig.upload("tmp").single("file"), new CreateProductController().handle); // Rota para criar produtos com upload de imagem
+router.post("/product", isAuthenticted, new CreateProductController().handle); // Rota para criar produtos com upload de imagem
+router.get('/category/product', isAuthenticted, new ListByCategoryController().handle); // Rota para listar produtos por categoria
+
 
 //-- Rotas Ordem/Pedidos --
-router.post('/order', isAuthenticted, new CreateOrderController().handle);
+router.post('/order', isAuthenticted, new CreateOrderController().handle); // servirá para criar uma nova ordem/pedido
 router.delete('/order', isAuthenticted, new RemoveOrderController().handle); 
 
 //-- Rotas Itens Ordem/Pedidos --
-router.post('/order/add', isAuthenticted, new AddItemController().handle);
+router.post('/order/add', isAuthenticted, new AddItemController().handle);   // Rota para adicionar um item ao pedido
 router.delete('/order/remove', isAuthenticted, new RemoveItemController().handle);
-router.put('/order/send', isAuthenticted, new SendOrderController().handle); 
+router.put('/order/send', isAuthenticted, new SendOrderController().handle);  // 
 router.get('/orders', isAuthenticted, new ListOrdersController().handle); // Rota para listar todos os pedidos que já foram finalizados (status: true e draft: false)
 router.get('/order/detail', isAuthenticted, new DetailOrderController().handle); // Rota para listar os detalhes de um pedido específico (itens do pedido) pelo order_id
 router.put('/order/finish', isAuthenticted, new FinishOrderController().handle); // Rota para finalizar um pedido (mudar o status para true)

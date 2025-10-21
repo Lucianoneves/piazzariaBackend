@@ -1,23 +1,29 @@
-import crypto from 'crypto';
-import multer from 'multer';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import multer from "multer";
+import path from "path";
+import crypto from "crypto";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
 
-// recriando __dirname no ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default {
   upload(folder: string) {
-    return {
+    return multer({
       storage: multer.diskStorage({
-        destination: resolve(__dirname, '..', '..', folder), // onde salvar
-        filename: (request, file, callback) => {
-          const fileHash = crypto.randomBytes(10).toString('hex');
-          const fileName = `${fileHash}-${file.originalname}`;
-          return callback(null, fileName);
+        destination: resolve(__dirname, "..", folder),
+        filename: (req, file, cb) => {
+          const fileHash = crypto.randomBytes(10).toString("hex");
+          cb(null, `${fileHash}-${file.originalname}`);
         },
       }),
-    };
+      fileFilter: (req, file, cb) => {
+        if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+          cb(null, true);
+        } else {
+          cb(new Error("Formato de arquivo não permitido"));
+        }
+      },
+    });
   },
 };

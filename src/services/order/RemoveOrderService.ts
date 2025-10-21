@@ -17,7 +17,7 @@
 
       const order = await PrismaClient.order.delete({ // deletando o pedido do banco de dados
         where: {
-          id: order_id
+          id: order_id // onde o id do pedido for igual ao id informado na requisição
         }
       });
       return order;
