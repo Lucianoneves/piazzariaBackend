@@ -1,0 +1,1 @@
+{"version":3,"file":"RemoveItemController.d.ts","sourceRoot":"","sources":["../../../src/controllers/order/RemoveItemController.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,OAAO,EAAE,QAAQ,EAAC,MAAM,SAAS,CAAA;AAGzC,cAAM,oBAAoB;IAClB,MAAM,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;CAYzC;AAED,OAAO,EAAE,oBAAoB,EAAE,CAAA"}

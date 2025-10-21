@@ -3,7 +3,7 @@
   "compilerOptions": {
     // File Layout
     // "rootDir": "./src",
-    // "outDir": "./dist",
+      "outDir": "./dist",
       "typeRoots": [
       "./src/@types",
       "./node_modules/@types"
