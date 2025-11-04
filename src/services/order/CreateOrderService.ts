@@ -1,29 +1,21 @@
-import PrismaClient from "../../prisma/index.js";
+import prisma from "../../prisma/index.js";
 
-
-
-interface OrderRequest { // tipagem dos dados que serão recebidos na requisição 
-    table: number; // número da mesa que fez o pedido
-    name: string | null; // nome do cliente que fez o pedido, pode ser nulo
+interface OrderRequest {
+  table: number;
+  name?: string;
 }
 
-
-
-
-  class CreateOrderService {
-    async execute({table, name}:OrderRequest) { // async pq é uma promessa
-
-        const order = await PrismaClient.order.create({ 
-            data: {
-                table: table,
-                name: name,  
+class CreateOrderService {
+  async execute({ table, name }: OrderRequest) {
+    const order = await prisma.order.create({
+      data: { 
+        table: table,
+        name: name 
             }
-        })
+    });
 
-        return order;
-    }
-    
+    return order;
+  }
 }
 
-
-    export { CreateOrderService }
+export { CreateOrderService };

@@ -55,7 +55,7 @@ router.delete('/order', isAuthenticted, new RemoveOrderController().handle);
 
 //-- Rotas Itens Ordem/Pedidos --
 router.post('/order/add', isAuthenticted, new AddItemController().handle);   // Rota para adicionar um item ao pedido
-router.delete('/order/remove', isAuthenticted, new RemoveItemController().handle);
+router.delete('/order/remove', isAuthenticted, new RemoveItemController().handle); // Rota para remover um item do pedido
 router.put('/order/send', isAuthenticted, new SendOrderController().handle);  // 
 router.get('/orders', isAuthenticted, new ListOrdersController().handle); // Rota para listar todos os pedidos que já foram finalizados (status: true e draft: false)
 router.get('/order/detail', isAuthenticted, new DetailOrderController().handle); // Rota para listar os detalhes de um pedido específico (itens do pedido) pelo order_id

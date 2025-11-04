@@ -1,23 +1,25 @@
 import { Request, Response } from "express";
 import { CreateOrderService } from "../../services/order/CreateOrderService.js";
-
-
-
-
+import prisma from "../../prisma/index.js";
 
 class CreateOrderController {
-    async handle(req: Request, res: Response) { // async pq é uma promessa
-        const { table, name } = req.body; // pegando os dados da requisição
+  async handle(req: Request, res: Response) {
+    const { table, name } = req.body;
 
-        const createOrderService = new CreateOrderService(); // instanciando a classe
+    const createOrderService = new CreateOrderService();
 
-        const order = await createOrderService.execute({ // passando os dados para o serviço
-            table,
-            name
-        }); // passando os dados para o serviço
+   const order = await prisma.order.create({
+  data: {
+    table,
+    name
+  }
+});
 
-        return res.json(order); // retornando o pedido criado
-    }
+
+    return res.json(order);
+  }
 }
 
-export { CreateOrderController }  
+export { CreateOrderController };
+
+
